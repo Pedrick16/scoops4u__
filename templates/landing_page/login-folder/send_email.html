@@ -1,0 +1,57 @@
+{% extends 'landing_page/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>SCOOPS 4 U</title>
+{% endblock %}
+
+{% block content %}
+<!-- Main CSS -->
+<link href="{% static '/css/signin.css'%}" rel="stylesheet">
+
+<section class="forgot-pass">
+    <div class="container forgot-container d-flex justify-content-center">
+        <div class="col-12 p-0 col-lg-9 col-md-9 d-flex justify-content-center">
+            <div class="row d-flex justify-content-center">
+                <div class="col-12 col-lg-12 title-main">
+                    <h1 class="col-lg-5">forgot your password?</h1>
+                    <p>Hello! Please <span>send us</span> the email you used to register account.</p>
+                </div>
+                <div class="col-12 col-lg-9 form-main">
+                    <form  method="post" class="col-lg-5">
+                    {% csrf_token %}
+                        <div class="user my-3">
+                            <input type="email" name="email" placeholder="Your Reseller Email" class="form-control" required>
+                        </div>
+                        <button  class="signin-btn mt-3 mb-5" type="submit" name="submit">send</button>
+                        <!-- <a href="{% url 'landing_page:send_email'  %}">forgot password</a> -->
+
+                        <div>
+                            {% for message in messages  %}
+                            {% if 'success' in message.tags %}
+                            <p class='alert alert-success mt-3'>{{message}}</p>
+                            {% elif 'error' in message.tags %}
+                            <p class='alert alert-danger mt-3'>{{message}}</p>
+                            {% else %}
+                            <p class='alert alert-info mt-3'>{{message}}</p>
+                            {% endif %}
+                            {% endfor %}
+                        </div>
+                    </form>
+                </div>
+                <div class="col-12 d-flex justify-content-center mt-5">
+                    <a href="{% url 'landing_page:login' %}">Go Back</a>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+</section>
+
+<script>
+    setTimeout(function() {
+    $('.alert').fadeOut('slow');
+    }, 2000);
+
+</script>
+{% endblock %}
